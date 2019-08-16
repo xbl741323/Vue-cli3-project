@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import axios from 'axios'//导入axios
 Vue.use(VueRouter)
-Vue.use(axios)
+
 
 Vue.config.productionTip = false
 import MintUI from "mint-ui"
