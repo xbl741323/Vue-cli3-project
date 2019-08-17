@@ -12,7 +12,7 @@
 <script>
 import { getHomeMultidatab } from "network/home.js";
 export default {
-  nane: "RecommendView",
+  name: "RecommendView",
   props: {
     recommends: {
       type: Array,
@@ -31,6 +31,7 @@ export default {
   text-align: center;
   font-size: 12px;
   padding: 15px 0 30px;
+  background-color: #fff;
 }
 .recommend-item {
   flex: 1;

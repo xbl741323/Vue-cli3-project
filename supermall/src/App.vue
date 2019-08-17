@@ -69,7 +69,8 @@ export default {
   padding-top: 40px;
   padding-bottom: 50px;
   overflow-x: hidden;
-  background-color: #fff;
+  overflow: visible;
+ 
 }
 .v-enter {
   opacity: 0;
