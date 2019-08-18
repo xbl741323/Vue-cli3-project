@@ -4,16 +4,13 @@
     <Swiper :lunbotuList="lunbotuList" :isfull="true"></Swiper>
     <recommend-view :recommends="recommends"></recommend-view>
     <feature-view></feature-view>
-    <tab-control class="tab-control-fix" :titles="titles"></tab-control>
-    <goods-list :goods="goods['pop'].list"></goods-list>
+    <tab-control class="tab-control-fix" :titles="titles" @tabClick="tabClick"></tab-control>
+    <goods-list :goods="goods[currentType].list"></goods-list>
   </div>
 </template>
 
 <script>
-import { 
-  getHomeMultidatab,
-  getHomeGoods
-   } from "network/home.js";
+import { getHomeMultidatab, getHomeGoods } from "network/home.js";
 import Swiper from "components/common/Swiper.vue";
 import RecommendView from "./childComps/RecommendView.vue";
 import FeatureView from "./childComps/FeatureView.vue";
@@ -25,21 +22,43 @@ export default {
     return {
       lunbotuList: [], //保存轮播图的数据,
       recommends: [],
-      titles: ['流行','新款','精品'],
-       goods:{
-        'pop':{page: 0, list:[]},
-        'new':{page: 0, list:[]},
-        'sell':{page: 0, list:[]},
-      }
+      titles: ["流行", "新款", "精品"],
+      goods: {
+        pop: { page: 0, list: [] },
+        new: { page: 0, list: [] },
+        sell: { page: 0, list: [] }
+      },
+      currentType: 'pop'
     };
   },
   created() {
     this.getLunbotu();
-    this.getGoods('pop');
-    this.getGoods('new');
-    this.getGoods('sell');
+    this.getGoods("pop");
+    this.getGoods("new");
+    this.getGoods("sell");
   },
   methods: {
+    /**
+     * 事件监听相关的方法
+     */
+    tabClick(index) {
+      switch(index){
+        case 0:
+        this.currentType = 'pop'
+        break
+        case 1:
+        this.currentType = 'new'
+        break
+        case 2:
+        this.currentType = 'sell'
+        break
+      }
+      // console.log(index);
+    },
+
+    /**
+     * 网络请求相关的方法
+     */
     getLunbotu() {
       getHomeMultidatab().then(res => {
         // console.log(res);
@@ -47,14 +66,14 @@ export default {
         this.recommends = res.data.recommend.list;
       });
     },
-    getGoods(type){
-      const page = this.goods[type].page + 1
-      getHomeGoods(type, page).then(res =>{
-            // console.log(res);
-            this.goods[type].list = this.goods[type].list.concat(res.data.list);
-            console.log(this.goods[type].list)  
-            this.goods[type].page = page;
-      })
+    getGoods(type) {
+      const page = this.goods[type].page + 1;
+      getHomeGoods(type, page).then(res => {
+        // console.log(res);
+        this.goods[type].list = this.goods[type].list.concat(res.data.list);
+        console.log(this.goods[type].list);
+        this.goods[type].page = page;
+      });
     }
   },
   components: {
@@ -68,8 +87,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tab-control-fix{
+.tab-control-fix {
   position: sticky;
   top: 40px;
+  z-index: 9;
 }
 </style>
