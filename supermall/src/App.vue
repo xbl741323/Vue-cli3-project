@@ -13,12 +13,12 @@
     </transition>
 
     <!-- 底部Tabber区域 -->
-    <tabber></tabber>
+    <tabbar></tabbar>
   </div>
 </template>
 
 <script>
-import tabber from "components/common/TabBar.vue";
+import tabbar from "components/common/TabBar.vue";
 export default {
   name: "app",
   data() {
@@ -54,7 +54,7 @@ export default {
     }
   },
   components: {
-    tabber
+    tabbar
   }
 };
 </script>

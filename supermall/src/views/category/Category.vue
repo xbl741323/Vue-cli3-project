@@ -106,39 +106,38 @@
 </template>
 
 <script>
-import BScroll from 'better-scroll'
+import BScroll from "better-scroll";
 export default {
-    name:"Category",
-    data() {
-      return {
-        scroll: null
-      }
-    },
-    mounted() {
-       this.scroll =  new BScroll(document.querySelector('.wrapper'),{
-          probeType: 3,
-          pullUpLoad: true
-      })
+  name: "Category",
+  data() {
+    return {
+      scroll: null
+    };
+  },
+  mounted() {
+    this.scroll = new BScroll(document.querySelector(".wrapper"), {
+      probeType: 3,
+      pullUpLoad: true,
+      click: true
+    });
 
-      this.scroll.on('scroll',(position) => {
-        //  console.log(position)
-      })
+    this.scroll.on("scroll", position => {
+      //  console.log(position)
+    });
 
-      this.scroll.on('pullingUp',() => {
-         console.log("上拉加载更多~")
-         bscroll.finishPullUp()
-      })
-    },
-    components:{
-      
-    }
+    this.scroll.on("pullingUp", () => {
+      console.log("上拉加载更多~");
+      bscroll.finishPullUp();
+    });
+  },
+  components: {}
 };
 </script>
 
 <style lang="scss" scoped>
-.wrapper{
-height: 300px;
-background-color: red;
-overflow: hidden;
+.wrapper {
+  height: 300px;
+  background-color: red;
+  overflow: hidden;
 }
 </style>
