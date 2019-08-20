@@ -45,10 +45,16 @@ export default {
     };
   },
   created() {
+    // 1.请求多个数据
     this.getLunbotu();
+    // 2.请求商品数据
     this.getGoods("pop");
     this.getGoods("new");
     this.getGoods("sell");
+    // 3.监听item中图片加载完成
+    this.$bus.$on('itemImgLoad',() => {
+      this.$refs.scroll.refresh()
+    })
   },
   computed: {
     showGoods() {

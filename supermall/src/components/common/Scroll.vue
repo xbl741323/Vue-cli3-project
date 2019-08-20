@@ -18,7 +18,7 @@ export default {
     pullUpLoad: {
       type: Boolean,
       default: false
-    },
+    }
   },
   data() {
     return {
@@ -39,6 +39,8 @@ export default {
       this.$emit("scroll", position);
     });
 
+    // console.log(this.scroll);
+
     // 3.监听上拉事件
     this.scroll.on("pullingUp", () => {
       this.$emit("pullingup")
@@ -49,7 +51,9 @@ export default {
     scrollTo(x, y, time = 300) {
       this.scroll.scrollTo(x, y, time);
     },
-    
+    refresh() {
+      this.scroll.refresh();
+    }
   }
 };
 </script>

@@ -12,6 +12,9 @@ Vue.use(MintUI)
 import '@/assets/mui/css/mui.min.css'
 import '@/assets/mui/css/icons-extra.css'
 import router from '@/router/router.js'//导入自定义路由模块
+
+Vue.prototype.$bus = new Vue() // 设置事件总线
+
 new Vue({
   render: h => h(App),
   router
