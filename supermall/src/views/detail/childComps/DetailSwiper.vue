@@ -1,10 +1,10 @@
 <template>
-  <div id="swiper">
+  <div class="detail-swiper">
     <!-- 将来，谁使用此轮播图组件，谁为我们传递 lunbotuList -->
     <!-- 此时，lunbotuList 应该是父组件向子组件传值来设置 -->
     <mt-swipe :auto="3000">
       <mt-swipe-item v-for="item in lunbotuList" :key="item.url">
-        <img :src="item.image" alt :class="{'full':isfull}" @load="swiperImgLoad" />
+        <img :src="item" alt/>
       </mt-swipe-item>
     </mt-swipe>
   </div>
@@ -13,40 +13,23 @@
 <script>
 import { Toast } from "mint-ui";
 export default {
-  name: "Swiper",
-  data() {
-    return {
-      isLoad: false
-    };
-  },
-  methods: {
-    swiperImgLoad() {
-      // console.log("图片加载完了")
-      if (!this.isLoad) {
-        this.$emit("swiperImgLoad");
-        this.isLoad = true
-      }
-    }
-  },
+  name: "DetailSwiper",
   props: ["lunbotuList", "isfull"]
 };
 </script>
 
 <style lang="scss" scoped>
 .mint-swipe {
-  height: 200px;
+  height: 250px;
   .mint-swipe-item {
     text-align: center;
     img {
-      //   width: 100%;
-      height: 100%;
+      width: 100%;
+      height: 460px;
     }
     .mui-media-body {
       font-size: 13px;
     }
   }
-}
-.full {
-  width: 100%;
 }
 </style>

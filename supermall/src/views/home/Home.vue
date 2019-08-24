@@ -1,5 +1,6 @@
 <template>
   <div id="home">
+    <tab-control :titles="titles" @tabClick="tabClick" ref="tabControl2" v-show="isTabFixed"></tab-control>
     <scroll
       class="content"
       ref="scroll"
@@ -9,10 +10,10 @@
       @pullingup="loadMore"
     >
       <!-- 轮播图区域 -->
-      <Swiper :lunbotuList="lunbotuList" :isfull="true"></Swiper>
+      <Swiper :lunbotuList="lunbotuList" :isfull="true" @swiperImgLoad="swiperImgLoad"></Swiper>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view></feature-view>
-      <tab-control class="tab-control-fix" :titles="titles" @tabClick="tabClick"></tab-control>
+      <tab-control :titles="titles" @tabClick="tabClick" ref="tabControl" v-show="!isTabFixed"></tab-control>
       <goods-list :goods="showGoods"></goods-list>
     </scroll>
     <back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
@@ -21,6 +22,7 @@
 
 <script>
 import { getHomeMultidatab, getHomeGoods } from "network/home.js";
+import { debounce } from "common/utils.js";
 import Swiper from "components/common/Swiper.vue";
 import RecommendView from "./childComps/RecommendView.vue";
 import FeatureView from "./childComps/FeatureView.vue";
@@ -41,7 +43,10 @@ export default {
         sell: { page: 0, list: [] }
       },
       currentType: "pop",
-      isShowBackTop: false
+      isShowBackTop: false,
+      tabOffsetTop: 0,
+      isTabFixed: false,
+      saveY: 0
     };
   },
   created() {
@@ -51,15 +56,32 @@ export default {
     this.getGoods("pop");
     this.getGoods("new");
     this.getGoods("sell");
-    // 3.监听item中图片加载完成
-    this.$bus.$on('itemImgLoad',() => {
-      this.$refs.scroll.refresh()
-    })
+  },
+  mounted() {
+    // 实现防抖,没实现成功
+    // const refresh = debounce(this.$refs.scroll.refresh, 50);
+
+    // 1.监听item中图片加载完成
+    this.$bus.$on("itemImgLoad", () => {
+      this.$refs.scroll.refresh();
+      // console.log(".....");
+      // refresh();
+    });
   },
   computed: {
     showGoods() {
       return this.goods[this.currentType].list;
     }
+  },
+  destroyed() {
+    console.log("home destroyed");
+  },
+  activated() {
+    this.$refs.scroll.scrollTo(0, this.saveY);
+    this.$refs.scroll.refresh()// 最好进行一次refresh
+  },
+  deactivated() {
+    this.saveY = this.$refs.scroll.getScrollY();
   },
   methods: {
     /**
@@ -77,6 +99,8 @@ export default {
           this.currentType = "sell";
           break;
       }
+      this.$refs.tabControl2.currentIndex = index;
+      this.$refs.tabControl.currentIndex = index;
       // console.log(index);
     },
     backClick() {
@@ -84,14 +108,22 @@ export default {
       this.$refs.scroll.scrollTo(0, 0);
     },
     contentScroll(position) {
-      // console.log(position);
+      // 1.判断BackTop是否显示
       this.isShowBackTop = -position.y > 1000;
+
+      // 2.决定tabControl是否吸顶(position: fixed)
+      // 这有问题，还没解决！！！！！！！！！！！！！
+      this.isTabFixed = -position.y > this.tabOffsetTop - 40;
     },
     loadMore() {
       // console.log("上拉加载更多");
-      this.getGoods(this.currentType)
+      this.getGoods(this.currentType);
     },
-
+    // 2.获取tabControl的offsetTop
+    // 所有的组件都有一个属性$el,用于获取组件中的元素
+    swiperImgLoad() {
+      this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop;
+    },
     /**
      * 网络请求相关的方法
      */
@@ -127,11 +159,6 @@ export default {
 <style lang="scss" scoped>
 #home {
   height: 100vh;
-}
-.tab-control-fix {
-  position: sticky;
-  top: 40px;
-  z-index: 9;
 }
 .content {
   height: calc(100% - 90px);

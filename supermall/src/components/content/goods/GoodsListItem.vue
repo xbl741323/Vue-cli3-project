@@ -1,11 +1,11 @@
 <template>
-  <div class="goods-item">
-      <img :src="goodsItem.show.img" alt="" @load="imgLoad">
-      <div class="goods-info">
-          <p>{{ goodsItem.title}}</p>
-          <span class="price">{{ goodsItem.price }}</span>
-          <span class="collect">{{ goodsItem.cfav }}</span>
-      </div>
+  <div class="goods-item" @click="itemClick(goodsItem.iid)">
+    <img :src="goodsItem.show.img" alt @load="imgLoad" />
+    <div class="goods-info">
+      <p>{{ goodsItem.title}}</p>
+      <span class="price">{{ goodsItem.price }}</span>
+      <span class="collect">{{ goodsItem.cfav }}</span>
+    </div>
   </div>
 </template>
 
@@ -21,26 +21,30 @@ export default {
     }
   },
   methods: {
-    imgLoad(){
+    imgLoad() {
       // 事件总线
-      this.$bus.$emit('itemImgLoad')
+      this.$bus.$emit("itemImgLoad");
+    },
+    itemClick(iid) {
+      // console.log('跳转到详情页')
+      this.$router.push({ name: "goodsinfo", params: { iid } });
     }
-  },
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-.goods-item{
+.goods-item {
   padding-bottom: 40px;
   position: relative;
   width: 48%;
 }
-.goods-item img{
+.goods-item img {
   width: 100%;
   border-radius: 5px;
   margin-bottom: 8px;
 }
-.goods-info{
+.goods-info {
   font-size: 12px;
   position: absolute;
   bottom: 5px;
@@ -49,21 +53,21 @@ export default {
   overflow: hidden;
   text-align: center;
 }
-.goods-info p{
+.goods-info p {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-bottom: 0px;
 }
-.goods-info .price{
+.goods-info .price {
   color: rgb(255, 159, 175);
   margin-right: 20px;
 }
-.goods-info .collect{
+.goods-info .collect {
   position: relative;
 }
-.goods-info .collect::before{
-  content:'';
+.goods-info .collect::before {
+  content: "";
   position: absolute;
   left: -15px;
   top: -1px;

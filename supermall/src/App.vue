@@ -1,15 +1,17 @@
 <template>
   <div id="app">
     <!-- 顶部Header区域 -->
-    <mt-header fixed :title="msg">
+    <mt-header fixed :title="msg" >
       <span slot="left" @click="goBack" v-show="flag">
         <mt-button icon="back">返回</mt-button>
       </span>
     </mt-header>
 
-    <!-- 中间的路由 router-view 区域 -->
     <transition>
-      <router-view></router-view>
+      <keep-alive exclude="Detail">
+        <!-- 中间的路由 router-view 区域 -->
+        <router-view></router-view>
+      </keep-alive>
     </transition>
 
     <!-- 底部Tabber区域 -->
@@ -50,6 +52,8 @@ export default {
       } else if (newVal === "/profile") {
         this.flag = true;
         this.msg = "个人中心";
+      }else{
+        this.flag = true;
       }
     }
   },
@@ -70,7 +74,6 @@ export default {
   padding-bottom: 50px;
   overflow-x: hidden;
   overflow: visible;
- 
 }
 .v-enter {
   opacity: 0;
