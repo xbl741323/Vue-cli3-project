@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- 顶部Header区域 -->
-    <mt-header fixed :title="msg" >
+    <mt-header fixed :title="msg">
       <span slot="left" @click="goBack" v-show="flag">
         <mt-button icon="back">返回</mt-button>
       </span>
@@ -15,7 +15,7 @@
     </transition>
 
     <!-- 底部Tabber区域 -->
-    <tabbar></tabbar>
+    <tabbar v-show="tflag"></tabbar>
   </div>
 </template>
 
@@ -26,7 +26,8 @@ export default {
   data() {
     return {
       flag: false,
-      msg: "购物街"
+      msg: "购物街",
+      tflag: true
     };
   },
   created() {
@@ -43,17 +44,22 @@ export default {
       if (newVal === "/home") {
         this.flag = false;
         this.msg = "购物街";
+        this.tflag = true;
       } else if (newVal === "/cart") {
         this.flag = true;
         this.msg = "购物车";
+        this.tflag = true;
       } else if (newVal === "/category") {
         this.flag = true;
         this.msg = "分类";
+        this.tflag = true;
       } else if (newVal === "/profile") {
         this.flag = true;
         this.msg = "个人中心";
-      }else{
+        this.tflag = true;
+      } else {
         this.flag = true;
+        this.tflag = false;
       }
     }
   },
