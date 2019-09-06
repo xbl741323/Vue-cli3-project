@@ -66,6 +66,7 @@ export default {
     height: 80px;
     background-color: #fff;
     padding: 25px 10px 10px 10px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     .logo {

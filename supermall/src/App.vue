@@ -27,11 +27,16 @@ export default {
     return {
       flag: false,
       msg: "购物街",
+      cartCounter: null,
       tflag: true
     };
   },
   created() {
     this.flag = this.$route.path === "/home" ? false : true;
+  },
+  mounted() {
+    // 问题尚未解决
+    this.cartCounter = this.$store.getters.cartLength
   },
   methods: {
     goBack() {
@@ -47,7 +52,7 @@ export default {
         this.tflag = true;
       } else if (newVal === "/cart") {
         this.flag = true;
-        this.msg = "购物车";
+        this.msg = this.cartCounter;
         this.tflag = true;
       } else if (newVal === "/category") {
         this.flag = true;

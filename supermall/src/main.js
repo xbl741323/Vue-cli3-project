@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
-import axios from 'axios'//导入axios
 Vue.use(VueRouter)
-
+import store from './store/index.js'
 
 Vue.config.productionTip = false
 import MintUI from "mint-ui"
@@ -17,5 +16,6 @@ Vue.prototype.$bus = new Vue() // 设置事件总线
 
 new Vue({
   render: h => h(App),
-  router
+  router,
+  store
 }).$mount('#app')

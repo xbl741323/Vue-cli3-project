@@ -1,6 +1,12 @@
 <template>
   <div class="detail-navbar">
-    <div v-for="item in titles" :key="item.id" class="title-item">{{ item}}</div>
+    <div
+      v-for="(item,index) in titles"
+      :key="index"
+      class="title-item"
+      :class="{active: index === currentIndex}"
+      @click="titleClick(index)"
+    >{{ item }}</div>
   </div>
 </template>
 
@@ -9,8 +15,15 @@ export default {
   name: "DetailNavBar",
   data() {
     return {
-      titles: ["商品", "参数", "评论", "推荐"]
+      titles: ["商品", "参数", "评论", "推荐"],
+      currentIndex: 0
     };
+  },
+  methods: {
+    titleClick(index) {
+      this.currentIndex = index;
+      this.$emit("titleClick", index);
+    }
   }
 };
 </script>
@@ -26,9 +39,12 @@ export default {
   display: flex;
 }
 .title-item {
-    flex: 1;
-//   flex: 0 0 50px;
+  flex: 1;
+  //   flex: 0 0 50px;
   height: 35px;
   line-height: 35px;
+}
+.active{
+  color:  rgb(255, 159, 175);
 }
 </style>
