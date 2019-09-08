@@ -1,76 +1,32 @@
 <template>
   <div id="profile">
     <scroll class="content" :probe-type="0">
-      <ul>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-        <li>个人信息</li>
-      </ul>
+      <profile-top></profile-top>
+      <profile-list></profile-list>
     </scroll>
   </div>
 </template>
 
 <script>
+import ProfileTop from "./childComps/ProfileTop.vue";
+import ProfileList from "./childComps/ProfileList.vue";
 import Scroll from "components/common/Scroll.vue";
 export default {
   name: "Profile",
   components: {
-    Scroll
+    Scroll,
+    ProfileTop,
+    ProfileList
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.content{
-  height: 300px;
-  background-color: red;
+#profile {
+  height: 100vh;
+}
+.content {
+  height: calc(100% - 90px);
   overflow: hidden;
 }
 </style>

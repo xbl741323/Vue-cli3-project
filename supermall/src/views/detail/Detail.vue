@@ -34,6 +34,7 @@ import GoodsList from "components/content/goods/GoodsList.vue";
 import DetailBottomBar from "./childComps/DetailBottomBar.vue";
 import Scroll from "components/common/Scroll.vue";
 import { backToMixin } from "common/mixin.js";
+import { Toast } from "mint-ui";
 export default {
   name: "Detail",
   data() {
@@ -135,6 +136,7 @@ export default {
       // 2.将商品添加到购物车里
       // this.$store.commit("addCart", product);
       this.$store.dispatch("addCart", product);
+      Toast("加入购物车成功!");
     }
   },
   components: {
